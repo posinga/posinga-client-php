@@ -1,0 +1,4 @@
+debug: false
+api_url: https://api.posinga.nl/orderapi
+username: my_posinga_username
+api_key: my_posinga_api_key
