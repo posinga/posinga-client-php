@@ -68,6 +68,7 @@ class CreateProductCommand extends Command
             if ($res['success']) {
                 $output->writeln('<info>'.$res['status_message'].'</info>');
                 $output->writeln('<info>Product ID: '.$res['product_id'].'</info>');
+                $output->writeln('<info>Product key: '.$res['product_uuid'].'</info>');
                 if ($res['model_id']) {
                     $output->writeln('<info>Product model ID: '.$res['model_id'].'</info>');
                 }
