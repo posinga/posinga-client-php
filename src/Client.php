@@ -6,6 +6,7 @@ namespace Posinga\Client;
 use GuzzleHttp\Client as GuzzleClient;
 use Symfony\Component\Yaml\Parser as YamlParser;
 use Posinga\Client\Model\Order;
+use Posinga\Client\Model\Product;
 
 class Client
 {
@@ -30,8 +31,6 @@ class Client
     {
         $guzzleclient = new GuzzleClient();
 
-        // $orderData['debug'] = !!$this->parameters['debug'];
-
         $res = $guzzleclient->post(
             ($this->parameters['api_url'].'/create'),
             [
@@ -43,6 +42,34 @@ class Client
 
         $body = $res->getBody();
         if ($body) {
+            return $body->read(2048);
+        }
+
+        return false;
+    }
+
+    public function createProduct(Product $product)
+    {
+        return $this->send('product/create', $product->serialize(!!$this->parameters['debug']));
+    }
+
+    private function send($action, $data)
+    {
+        $guzzleclient = new GuzzleClient();
+
+        $params = $this->parameters['server_api'];
+        $data['debug'] = !!$this->parameters['debug'];
+
+        $res = $guzzleclient->post(
+            ($params['api_url'].'/'.$action),
+            [
+                'auth' => [$params['username'], $params['password']],
+                'headers' => ['content-type' => 'application/json'],
+                'body' => json_encode($data),
+            ]
+        );
+
+        if ($body = $res->getBody()) {
             return $body->read(2048);
         }
 

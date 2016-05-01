@@ -1,4 +1,10 @@
 debug: false
+
 api_url: https://api.posinga.nl/orderapi
 username: my_posinga_username
 api_key: my_posinga_api_key
+
+server_api:
+    api_url: http://linkorb-server.com/api/v1
+    username: username
+    password: pass
